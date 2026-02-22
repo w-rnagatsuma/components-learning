@@ -1,0 +1,13 @@
+{
+  // まずPrettierでフォーマット
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+
+  // 次にESLintのFixを保存時に実行
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // ESLintが見る対象（Nuxt/Vue/TS対応）
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue"]
+}
