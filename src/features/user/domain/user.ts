@@ -6,7 +6,7 @@ export const normalizeEmail = (s: string) => s.trim().toLowerCase();
 export const getDisplayName = (user: Pick<User, 'firstName' | 'lastName'>) =>
   `${user.firstName} ${user.lastName}`.trim();
 
-export const validateUserUpdateInput = (input: UserUpdateInput) => {
+export const validateUserUpdate = (input: UserUpdateInput) => {
   const errors: string[] = [];
   if (!normalizeName(input.firstName)) errors.push('名が空です');
   if (!normalizeName(input.lastName)) errors.push('姓が空です');
