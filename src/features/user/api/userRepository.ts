@@ -37,13 +37,14 @@ const DB: User[] = [
 ];
 
 export const userRepository = {
-  async list(query: { q?: string }): Promise<User[]> {
+  async list(query: { keyword?: string }): Promise<User[]> {
     await sleep(250); // 疑似的な遅延
-    const q = (query.q ?? '').trim().toLowerCase();
-    if (!q) return [...DB];
+    const keyword = (query.keyword ?? '').trim().toLowerCase();
+    if (!keyword) return [...DB];
     return DB.filter((user) => {
+      // needle in haystack（針を干し草の山から探す）
       const hay = `${user.firstName} ${user.lastName} ${user.email}`.toLowerCase();
-      return hay.includes(q);
+      return hay.includes(keyword);
     });
   },
 
