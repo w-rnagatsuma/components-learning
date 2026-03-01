@@ -1,19 +1,32 @@
 <template>
-  <section>
-    <header>
+  <section class="card">
+    <header class="card__hero">
       <h2>ユーザ一覧</h2>
-      <span>loading...</span>
+      <span v-if="loading">loading...</span>
     </header>
 
-    <BaseInput v-model="qProxy" label="検索" placeholder="検索ワードを入力してください" />
+    <BaseInput v-model="qProxy" label="検索" placeholder="name/email" />
 
-    <p>{{ error }}</p>
+    <p v-if="error" class="card__error">{{ error }}</p>
 
-    <ul>
-      <li>
-        <a>dummy</a>
+    <ul class="card__list">
+      <li v-for="v in users" :key="v.id" class="card__list-item">
+        <a :href="`/users/${v.id}`" @click.prevent="$emit('user-click', v.id)">
+          {{ v.firstName }} {{ v.lastName }} ({{ v.email }})
+        </a>
       </li>
     </ul>
+
+    <div v-if="recent.length" class="card__recent">
+      <h3>最近見たユーザ</h3>
+      <ul class="card__list">
+        <li v-for="r in recent" :key="r.id">
+          <a :href="`/users/${r.id}`" @click.prevent="$emit('user-click', r.id)">
+            {{ r.firstName }} {{ r.lastName }}
+          </a>
+        </li>
+      </ul>
+    </div>
   </section>
 </template>
 
@@ -21,7 +34,53 @@
 import BaseInput from '~/src/shared/components/BaseInput.vue';
 
 const qProxy = ref('');
-const error = ref('');
+const error = ref('えらー仮');
+const loading = ref(false);
+const users = ref([
+  { id: 1, firstName: 'ユーザ1', lastName: '姓1', email: 'user1@example.com' },
+  { id: 2, firstName: 'ユーザ2', lastName: '姓2', email: 'user2@example.com' },
+  { id: 3, firstName: 'ユーザ3', lastName: '姓3', email: 'user3@example.com' },
+]);
+const recent = ref([
+  { id: 1, firstName: 'ユーザ1', lastName: '姓1' },
+  { id: 2, firstName: 'ユーザ2', lastName: '姓2' },
+  { id: 3, firstName: 'ユーザ3', lastName: '姓3' },
+]);
 </script>
 
-<style scoped></style>
+<style scoped>
+.card {
+  padding: 14px;
+  border: 1px solid #bbb;
+  border-radius: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.card__hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card__error {
+  color: #a00;
+}
+
+.card__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card__list-item {
+  padding: 8px;
+  border-bottom: 1px solid #bbb;
+}
+
+.card__recent {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #bbb;
+}
+</style>
