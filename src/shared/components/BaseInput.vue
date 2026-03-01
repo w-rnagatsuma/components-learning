@@ -4,7 +4,7 @@
     <input
       class="input"
       :value="modelValue"
-      :placeholder="palaceholder"
+      :placeholder="placeholder"
       :disabled="disabled"
       @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     />
@@ -16,12 +16,12 @@ withDefaults(
   defineProps<{
     modelValue: string;
     label?: string;
-    palaceholder?: string;
+    placeholder?: string;
     disabled?: boolean;
   }>(),
   {
     label: '',
-    palaceholder: '',
+    placeholder: '',
     disabled: false,
   },
 );
