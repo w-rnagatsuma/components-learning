@@ -17,7 +17,7 @@
       </li>
     </ul>
 
-    <div v-if="recent.length" class="card__recent">
+    <div v-if="recent && recent.length" class="card__recent">
       <h3>最近見たユーザ</h3>
       <ul class="card__list">
         <li v-for="r in recent" :key="r.id">
@@ -32,20 +32,25 @@
 
 <script lang="ts" setup>
 import BaseInput from '~/src/shared/components/BaseInput.vue';
+import type { UserId } from '../types/user';
 
-const qProxy = ref('');
-const error = ref('えらー仮');
-const loading = ref(false);
-const users = ref([
-  { id: 1, firstName: 'ユーザ1', lastName: '姓1', email: 'user1@example.com' },
-  { id: 2, firstName: 'ユーザ2', lastName: '姓2', email: 'user2@example.com' },
-  { id: 3, firstName: 'ユーザ3', lastName: '姓3', email: 'user3@example.com' },
-]);
-const recent = ref([
-  { id: 1, firstName: 'ユーザ1', lastName: '姓1' },
-  { id: 2, firstName: 'ユーザ2', lastName: '姓2' },
-  { id: 3, firstName: 'ユーザ3', lastName: '姓3' },
-]);
+const props = defineProps<{
+  query: string;
+  users: { id: UserId; firstName: string; lastName: string; email: string }[];
+  loading: boolean;
+  error: string | null;
+  recent?: { id: UserId; firstName: string; lastName: string }[];
+}>();
+
+const emit = defineEmits<{
+  (e: 'update:query', value: string): void;
+  (e: 'user-click', id: UserId): void;
+}>();
+
+const qProxy = computed({
+  get: () => props.query,
+  set: (v) => emit('update:query', v),
+});
 </script>
 
 <style scoped>
