@@ -55,7 +55,8 @@ export const userRepository = {
     return { ...user };
   },
 
-  async update(id: UserId, input: UserUpdateInput): Promise<User> {
+  async update(id: UserId | null, input: UserUpdateInput): Promise<User> {
+    if (id === null) throw new Error('ユーザーIDが無効です');
     await sleep(250); // 疑似的な遅延
     const idx = DB.findIndex((u) => u.id === id);
     if (idx === -1) throw new Error('ユーザーが見つかりません');
