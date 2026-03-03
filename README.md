@@ -1,75 +1,170 @@
-# Nuxt Minimal Starter
+# Nuxt機能　利用状況チェック表
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+### プロジェクト基本情報
 
-## Setup
+- リポジトリ：`components-learning`
+- Nuxtバージョン：`3.33.1`
+- Nodeバージョン：`v20.19.0`
+- パッケージマネージャー：`npm`
+- 主要モジュール：
+  - `@nuxt/eslint`
+  - `prettier`
+- デプロイ形式：
 
-Make sure to install dependencies:
+## 1. ルーティング / ページ
 
-```bash
-# npm
-npm install
+| 項目                               | 使用 | メモ |
+| ---------------------------------- | ---- | ---- |
+| `pages/`ファイルベースルーティング | ✅   |      |
+| 動的ルート（`[id].vue`）           | ✅   |      |
+| catch-all（`[...slug.vue]`）       | ❌   |      |
+| `<NuxtLink>`                       | ✅   |      |
+| `navigateTo()`                     | ❌   |      |
+| `useRoute()`                       | ❌   |      |
+| `useRouter()`                      | ❌   |      |
+| `definePageMeta()`                 | ❌   |      |
+| 404NotFound ハンドリング           | ❌   |      |
 
-# pnpm
-pnpm install
+## 2. レイアウト / app.vue
 
-# yarn
-yarn install
+| 項目                         | 使用 | メモ |
+| ---------------------------- | ---- | ---- |
+| `layout/default.vue`         | ✅   |
+| 複数レイアウト               |      |
+| `definePageMeta({ layout })` |      |
+| `app.vue` 利用               |      |
+| `error.vue` （グローバル）   |      |
 
-# bun
-bun install
-```
+## 3. データ取得（SSR/CSR）
 
-## Development Server
+| 項目                        | 使用 | メモ |
+| --------------------------- | ---- | ---- |
+| `useFetch()`                |      |
+| `useAsyncData()`            |      |
+| `$fetch` （直接呼び）       |      |
+| `refresh()` （再取得）      |      |
+| `pending/error`をUIに反映   |      |
+| `server: false` （CSR限定） |      |
+| `lazy: true` （遅延取得）   |      |
+| key指定                     |      |
+| キャッシュ/再利用戦略       |      |
 
-Start the development server on `http://localhost:3000`:
+## 4. 状態管理
 
-```bash
-# npm
-npm run dev
+| 項目                       | 使用 | メモ |
+| -------------------------- | ---- | ---- |
+| `useState()`               |      |
+| Pinia導入（`@pinia/nuxt`） |      |
+| `stores/`配下のstore定義   |      |
+| storeのaction / getter利用 |      |
+| 永続化（localStorage等）   |      |
+| SSR意識した初期化          |      |
 
-# pnpm
-pnpm dev
+## 5. Composables / Utils
 
-# yarn
-yarn dev
+| 項目                      | 使用 | メモ |
+| ------------------------- | ---- | ---- |
+| `composables/` 自動import |      |
+| 共通APIクライアント       |      |
+| フォーマッター            |      |
+| 権限チェック              |      |
+| utils/helpers方針         |      |
 
-# bun
-bun run dev
-```
+## 6. Plugins / Inject
 
-## Production
+| 項目                 | 使用 | メモ |
+| -------------------- | ---- | ---- |
+| `plugins/\*.ts`      |      |
+| `defineNuxtPlugin()` |      |
+| `useNuxtApp()`       |      |
+| client only plugin   |      |
+| `$xxx`注入           |      |
 
-Build the application for production:
+## 7. サーバー機能（Nitro）
 
-```bash
-# npm
-npm run build
+| 項目                        | 使用 | メモ |
+| --------------------------- | ---- | ---- |
+| `server/api/*.ts`           |      |
+| `defineEventHandler()`      |      |
+| `getQuery()` / `readBody()` |      |
+| cookie操作                  |      |
+| `server/middleware`         |      |
+| 外部APIプロキシ             |      |
 
-# pnpm
-pnpm build
+## 8. ミドルウェア
 
-# yarn
-yarn build
+| 項目                        | 使用 | メモ |
+| --------------------------- | ---- | ---- |
+| middleware/\*.ts            |      |
+| defineNuxtRouteMiddleware() |      |
+| 認証ガード                  |      |
+| 権限ガード                  |      |
 
-# bun
-bun run build
-```
+## 9. 設定 / 環境変数
 
-Locally preview production build:
+| 項目               | 使用 | メモ |
+| ------------------ | ---- | ---- |
+| `nuxt.config.ts`   |      |
+| `runtimeConfig     |      |
+| useRuntimeConfig() |      |
+| env切替            |      |
+| alias等            |      |
 
-```bash
-# npm
-npm run preview
+## 10. SEO / Head
 
-# pnpm
-pnpm preview
+| 項目               | 使用 | メモ |
+| ------------------ | ---- | ---- |
+| `useHead()`        |      |
+| `useSeoMeta`       |      |
+| 動的OGP            |      |
+| canonical / robots |      |
 
-# yarn
-yarn preview
+## 11. コンポーネント運用
 
-# bun
-bun run preview
-```
+| 項目                     | 使用 | メモ |
+| ------------------------ | ---- | ---- |
+| `components/` 自動import |      |
+| Base/Feature分離         |      |
+| 命名規則（multi-word）   |      |
+| UIライブラリ利用         |      |
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## 12. スタイリング / アセット
+
+| 項目             | 使用 | メモ |
+| ---------------- | ---- | ---- |
+| `assets` 利用    |      |
+| `public` 利用    |      |
+| Tailwind         |      |
+| デザイントークン |      |
+| ダークモード     |      |
+
+## 13. エラーハンドリング
+
+| 項目                  | 使用 | メモ |
+| --------------------- | ---- | ---- |
+| `createError()`       |      |
+| `showError()`         |      |
+| `error.vue`           |      |
+| 共通処理（toaster等） |      |
+
+## 14. ビルド / デプロイ
+
+| 項目                 | 使用 | メモ |
+| -------------------- | ---- | ---- |
+| SSR                  |      |
+| SSG（generate）      |      |
+| Hybrid（routeRules） |      |
+| `routeRules`         |      |
+| ホスティング         |      |
+
+## 15. 品質
+
+| 項目              | 使用 | メモ |
+| ----------------- | ---- | ---- |
+| ESLint            |      |
+| Prettier          |      |
+| TypeScript        |      |
+| Vitest            |      |
+| E2E               |      |
+| Husky/lint-staged |      |
+| CI                |      |
