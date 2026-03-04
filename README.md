@@ -3,7 +3,7 @@
 ### プロジェクト基本情報
 
 - リポジトリ：`components-learning`
-- Nuxtバージョン：`3.33.1`
+- Nuxtバージョン：`3.21.1`
 - Nodeバージョン：`v20.19.0`
 - パッケージマネージャー：`npm`
 - 主要モジュール：
@@ -51,14 +51,14 @@
 
 ## 4. 状態管理
 
-| 分類 | 項目                       | 使用 | メモ                                            |
-| ---- | -------------------------- | ---- | ----------------------------------------------- |
-| Nuxt | `useState()`               | ❌   | 使用なし                                        |
-| 外部 | Pinia導入（`@pinia/nuxt`） | ❌   | `package.json` に依存なし                       |
-| 外部 | `stores/`配下のstore定義   | ❌   | `stores/` ディレクトリなし                      |
-| 外部 | storeのaction / getter利用 | ❌   | store自体未導入                                 |
-| 外部 | 永続化（localStorage等）   | ✅   | `useRecentUsers.ts` で `localStorage` 利用      |
-| Vue  | SSR意識した初期化          | ✅   | `import.meta.client` ガードと `onMounted(load)` |
+| 分類 | 項目                                        | 使用 | メモ                                            |
+| ---- | ------------------------------------------- | ---- | ----------------------------------------------- |
+| Nuxt | `useState()`                                | ❌   | 使用なし                                        |
+| 外部 | Pinia導入（`@pinia/nuxt`）                  | ❌   | `package.json` に依存なし                       |
+| 外部 | `stores/`配下のstore定義                    | ❌   | `stores/` ディレクトリなし                      |
+| 外部 | storeのaction / getter利用                  | ❌   | store自体未導入                                 |
+| 外部 | 永続化（localStorage等）                    | ✅   | `useRecentUsers.ts` で `localStorage` 利用      |
+| Vue  | SSR意識した初期化（cookie/runtimeConfig等） | ✅   | `import.meta.client` ガードと `onMounted(load)` |
 
 ## 5. Composables / Utils
 
@@ -72,33 +72,35 @@
 
 ## 6. Plugins / Inject
 
-| 分類 | 項目                 | 使用 | メモ                        |
-| ---- | -------------------- | ---- | --------------------------- |
-| Nuxt | `plugins/\*.ts`      | ❌   | `plugins/` ディレクトリなし |
-| Nuxt | `defineNuxtPlugin()` | ❌   | 使用なし                    |
-| Nuxt | `useNuxtApp()`       | ❌   | 使用なし                    |
-| Nuxt | client only plugin   | ❌   | 使用なし                    |
-| Nuxt | `$xxx`注入           | ❌   | 使用なし                    |
+| 分類 | 項目                                 | 使用 | メモ                        |
+| ---- | ------------------------------------ | ---- | --------------------------- |
+| Nuxt | `plugins/\*.ts`                      | ❌   | `plugins/` ディレクトリなし |
+| Nuxt | `defineNuxtPlugin()`                 | ❌   | 使用なし                    |
+| Nuxt | `nuxtApp.provide()` / `useNuxtApp()` | ❌   | 使用なし                    |
+| Nuxt | client only plugin（`.client.ts`）   | ❌   | 使用なし                    |
+| Nuxt | server only plugin（`.server.ts`）   | ❌   | 使用なし                    |
+| Nuxt | `$xxx`注入                           | ❌   | 使用なし                    |
 
 ## 7. サーバー機能（Nitro）
 
-| 分類 | 項目                        | 使用 | メモ                                  |
-| ---- | --------------------------- | ---- | ------------------------------------- |
-| Nuxt | `server/api/*.ts`           | ❌   | `server/` 配下は `tsconfig.json` のみ |
-| Nuxt | `defineEventHandler()`      | ❌   | 使用なし                              |
-| Nuxt | `getQuery()` / `readBody()` | ❌   | 使用なし                              |
-| Nuxt | cookie操作                  | ❌   | 使用なし                              |
-| Nuxt | `server/middleware`         | ❌   | ディレクトリ未作成                    |
-| 外部 | 外部APIプロキシ             | ❌   | 実装なし                              |
+| 分類 | 項目                                 | 使用 | メモ                                  |
+| ---- | ------------------------------------ | ---- | ------------------------------------- |
+| Nuxt | `server/api/*.ts`                    | ❌   | `server/` 配下は `tsconfig.json` のみ |
+| Nuxt | `defineEventHandler()`               | ❌   | 使用なし                              |
+| Nuxt | `getQuery()` / `readBody()`          | ❌   | 使用なし                              |
+| Nuxt | cookie操作                           | ❌   | 使用なし                              |
+| Nuxt | `server/middleware`                  | ❌   | ディレクトリ未作成                    |
+| 外部 | 外部APIプロキシ（秘匿/トークン付与） | ❌   | 実装なし                              |
 
 ## 8. ミドルウェア
 
-| 分類 | 項目                        | 使用 | メモ                           |
-| ---- | --------------------------- | ---- | ------------------------------ |
-| Nuxt | middleware/\*.ts            | ❌   | `middleware/` ディレクトリなし |
-| Nuxt | defineNuxtRouteMiddleware() | ❌   | 使用なし                       |
-| Nuxt | 認証ガード                  | ❌   | 実装なし                       |
-| Nuxt | 権限ガード                  | ❌   | 実装なし                       |
+| 分類 | 項目                                           | 使用 | メモ                           |
+| ---- | ---------------------------------------------- | ---- | ------------------------------ |
+| Nuxt | middleware/\*.ts                               | ❌   | `middleware/` ディレクトリなし |
+| Nuxt | defineNuxtRouteMiddleware()                    | ❌   | 使用なし                       |
+| Nuxt | 認証ガード（未ログインリダイレクト）           | ❌   | 実装なし                       |
+| Nuxt | 権限ガード（role/permission）                  | ❌   | 実装なし                       |
+| 外部 | 認証モジュール（例：`@sidebase/nuxt-auth` 等） | ❌   | 導入なし                       |
 
 ## 9. 設定 / 環境変数
 
